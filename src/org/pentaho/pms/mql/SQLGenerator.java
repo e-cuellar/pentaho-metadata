@@ -384,7 +384,7 @@ public class SQLGenerator {
     ConceptInterface concept = model.getConcept();
     ConceptPropertyInterface delayOuterJoin = concept.getProperty( "delay_outer_join_conditions" );
     if ( ( delayOuterJoin != null ) && ( delayOuterJoin.getType().equals( ConceptPropertyType.BOOLEAN ) ) ) {
-      Boolean value = (Boolean) delayOuterJoin.getValue();
+      Boolean value = (Boolean) delayOuterJoin.getValue().getValue();
       query.setDelayOuterJoinConditions( value.booleanValue() );
     }
 
@@ -706,7 +706,6 @@ public class SQLGenerator {
    *          include tables
    * @return shortest path
    */
-  @SuppressWarnings( "unchecked" )
   public Path getShortestPathBetween( BusinessModel model, List<BusinessTable> tables ) {
     logger.debug( "Enter getShortestPathBetween() - new" );
 
@@ -743,7 +742,7 @@ public class SQLGenerator {
     ConceptPropertyInterface pathMethod = concept.getProperty( "path_build_method" );
     String pathMethodString;
     if ( ( pathMethod != null ) && ( pathMethod.getType().equals( ConceptPropertyType.STRING ) ) ) {
-      pathMethodString = (String) pathMethod.getValue();
+      pathMethodString = (String) pathMethod.getValue().getValue();
     } else {
       if ( preferClassicShortestPath ) {
         pathMethodString = "CLASSIC";

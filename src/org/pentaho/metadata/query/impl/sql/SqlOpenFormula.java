@@ -30,6 +30,7 @@ import org.pentaho.metadata.model.LogicalColumn;
 import org.pentaho.metadata.model.LogicalModel;
 import org.pentaho.metadata.model.LogicalTable;
 import org.pentaho.metadata.model.SqlPhysicalColumn;
+import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.model.concept.types.AggregationType;
 import org.pentaho.metadata.model.concept.types.LocalizedString;
 import org.pentaho.metadata.model.concept.types.TargetColumnType;
@@ -107,7 +108,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   private boolean hasAggregateFunction = false;
 
-  private Map<String, Object> parameters;
+  private Map<String, Property> parameters;
 
   /** the string to parse */
   private String formulaString;
@@ -125,7 +126,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
    *           throws an exception if we're missing anything important
    */
   public SqlOpenFormula( LogicalModel model, DatabaseMeta databaseMeta, String formulaString,
-      Map<LogicalTable, String> tableAliases, Map<String, Object> parameters, boolean genAsPreparedStatement )
+      Map<LogicalTable, String> tableAliases, Map<String, Property> parameters, boolean genAsPreparedStatement )
     throws PentahoMetadataException {
 
     this.model = model;
@@ -170,7 +171,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
    *           throws an exception if we're missing anything important
    */
   public SqlOpenFormula( LogicalModel model, LogicalTable table, DatabaseMeta databaseMeta, String formulaString,
-      Map<LogicalTable, String> tableAliases, Map<String, Object> parameters, boolean genAsPreparedStatement )
+      Map<LogicalTable, String> tableAliases, Map<String, Property> parameters, boolean genAsPreparedStatement )
     throws PentahoMetadataException {
 
     this.model = model;
@@ -317,8 +318,8 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
             // break;
             // }
 
-            if ( ( column.getProperty( SqlPhysicalColumn.TARGET_COLUMN_TYPE ) == TargetColumnType.COLUMN_NAME )
-                && fieldName.equals( column.getProperty( SqlPhysicalColumn.TARGET_COLUMN ) ) ) {
+            if ( ( column.getProperty( SqlPhysicalColumn.TARGET_COLUMN_TYPE ).getValue() == TargetColumnType.COLUMN_NAME )
+                && fieldName.equals( (String) column.getProperty( SqlPhysicalColumn.TARGET_COLUMN ).getValue() ) ) {
               // we've found it, but we don't do anything due to aggregation issues later
               return;
             }
@@ -847,7 +848,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
       // Search by physical column name / formula...
       //
       for ( LogicalColumn col : table.getLogicalColumns() ) {
-        if ( contextName.equals( col.getProperty( SqlPhysicalColumn.TARGET_COLUMN ) ) ) {
+        if ( contextName.equals( (String) col.getProperty( SqlPhysicalColumn.TARGET_COLUMN ).getValue() ) ) {
           c = col;
           break;
         }

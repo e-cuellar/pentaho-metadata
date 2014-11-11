@@ -102,14 +102,14 @@ public interface IConcept extends Cloneable {
    * 
    * @return concept property
    */
-  public Object getProperty( String name );
+  public Property getProperty( String name );
 
   /**
    * sets the property
    * 
    * @param property
    */
-  public void setProperty( String name, Object property );
+  public void setProperty( String name, Property property );
 
   /**
    * removes the property
@@ -124,21 +124,21 @@ public interface IConcept extends Cloneable {
    * @param name
    * @return
    */
-  public Object getChildProperty( String name );
+  public Property getChildProperty( String name );
 
   /**
    * this is an unmodifiable map of properties
    * 
    * @return property
    */
-  public Map<String, Object> getProperties();
+  public Map<String, Property> getProperties();
 
   /**
    * this is an unmodifiable map of the current concept properties
    * 
    * @return property
    */
-  public Map<String, Object> getChildProperties();
+  public Map<String, Property> getChildProperties();
 
   /**
    * returns the inherited concept

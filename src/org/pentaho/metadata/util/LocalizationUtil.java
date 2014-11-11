@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.metadata.messages.Messages;
 import org.pentaho.metadata.model.Domain;
 import org.pentaho.metadata.model.concept.IConcept;
+import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.model.concept.types.LocaleType;
 import org.pentaho.metadata.model.concept.types.LocalizedString;
 
@@ -40,10 +41,10 @@ public class LocalizationUtil {
 
   protected void exportLocalizedPropertiesRecursively( Properties props, IConcept parent, String locale ) {
     for ( String propName : parent.getChildProperties().keySet() ) {
-      if ( parent.getChildProperty( propName ) instanceof LocalizedString ) {
+      if ( parent.getChildProperty( propName ).getValue() instanceof LocalizedString ) {
         // externalize string
         String key = stringizeTokens( parent.getUniqueId() ) + ".[" + escapeKey( propName ) + "]";
-        LocalizedString lstr = (LocalizedString) parent.getChildProperty( propName );
+        LocalizedString lstr = (LocalizedString) parent.getChildProperty( propName ).getValue();
         String value = lstr.getLocalizedString( locale );
         if ( value == null ) {
           value = "";
@@ -224,7 +225,11 @@ public class LocalizationUtil {
         String property = tokens.remove( tokens.size() - 1 );
         IConcept concept = domain.getChildByUniqueId( tokens );
         if ( concept != null ) {
-          LocalizedString localizedString = (LocalizedString) concept.getProperty( property );
+          LocalizedString localizedString = null;
+          Property prop = concept.getProperty( property );
+          if ( prop != null ) {
+            localizedString = (LocalizedString) prop.getValue();
+          }
           if ( localizedString != null ) {
             localizedString.setString( locale, props.getProperty( k ) );
           }

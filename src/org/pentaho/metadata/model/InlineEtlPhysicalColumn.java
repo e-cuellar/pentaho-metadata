@@ -17,6 +17,7 @@
 package org.pentaho.metadata.model;
 
 import org.pentaho.metadata.model.concept.IConcept;
+import org.pentaho.metadata.model.concept.Property;
 
 /**
  * The Inline Etl column inherits from the abstract physical column, and also defines a column number to get data from.
@@ -51,11 +52,15 @@ public class InlineEtlPhysicalColumn extends AbstractPhysicalColumn {
   }
 
   public String getFieldName() {
-    return (String) getProperty( FIELD_NAME );
+    Property property = getProperty( FIELD_NAME );
+    if( property != null ) {
+      return (String) property.getValue();
+    }
+    return null;
   }
 
   public void setFieldName( String fieldName ) {
-    setProperty( FIELD_NAME, fieldName );
+    setProperty( FIELD_NAME, new Property<String>(fieldName) );
   }
 
 }

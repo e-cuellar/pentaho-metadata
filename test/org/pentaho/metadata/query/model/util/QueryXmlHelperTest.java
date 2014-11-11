@@ -71,7 +71,7 @@ public class QueryXmlHelperTest {
     paramElement.setAttribute( "defaultValue", "a|b" ); //$NON-NLS-1$ //$NON-NLS-2$
 
     helper.addParameterFromXmlNode( query, paramElement );
-    assertEquals( 2, ( (Object[]) query.getParameters().get( 0 ).getDefaultValue() ).length );
+    assertEquals( 2, ( (Object[]) query.getParameters().get( 0 ).getDefaultValue().getValue() ).length );
   }
 
   @Test

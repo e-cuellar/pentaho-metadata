@@ -17,6 +17,7 @@
 package org.pentaho.metadata.model;
 
 import org.pentaho.metadata.model.concept.IConcept;
+import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.model.concept.types.TargetColumnType;
 
 /**
@@ -50,19 +51,27 @@ public class SqlPhysicalColumn extends AbstractPhysicalColumn {
   }
 
   public String getTargetColumn() {
-    return (String) getProperty( TARGET_COLUMN );
+    Property property = getProperty( TARGET_COLUMN );
+    if( property != null ) {
+      return (String) property.getValue();
+    }
+    return null;
   }
 
   public void setTargetColumn( String targetTable ) {
-    setProperty( TARGET_COLUMN, targetTable );
+    setProperty( TARGET_COLUMN, new Property<String>( targetTable ) );
   }
 
   public TargetColumnType getTargetColumnType() {
-    return (TargetColumnType) getProperty( TARGET_COLUMN_TYPE );
+    Property property = getProperty( TARGET_COLUMN_TYPE );
+    if( property != null ) {
+      return (TargetColumnType) property.getValue();
+    }
+    return null;
   }
 
   public void setTargetColumnType( TargetColumnType targetTableType ) {
-    setProperty( TARGET_COLUMN_TYPE, targetTableType );
+    setProperty( TARGET_COLUMN_TYPE, new Property<TargetColumnType>( targetTableType ) );
   }
 
   public IPhysicalTable getPhysicalTable() {

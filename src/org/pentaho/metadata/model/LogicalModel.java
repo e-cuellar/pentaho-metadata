@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.pentaho.metadata.model.concept.Concept;
 import org.pentaho.metadata.model.concept.IConcept;
+import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.model.concept.security.RowLevelSecurity;
 import org.pentaho.metadata.model.concept.types.LocalizedString;
 
@@ -118,11 +119,15 @@ public class LogicalModel extends Concept {
   }
 
   public RowLevelSecurity getRowLevelSecurity() {
-    return (RowLevelSecurity) getProperty( ROW_LEVEL_SECURITY );
+    Property property = getProperty( ROW_LEVEL_SECURITY );
+    if( property != null ) {
+      return (RowLevelSecurity) property.getValue();
+    }
+    return null;
   }
 
   public void setRowLevelSecurity( RowLevelSecurity rls ) {
-    setProperty( ROW_LEVEL_SECURITY, rls );
+    setProperty( ROW_LEVEL_SECURITY, new Property<RowLevelSecurity>( rls ) );
   }
 
   public Category findCategory( String categoryId ) {

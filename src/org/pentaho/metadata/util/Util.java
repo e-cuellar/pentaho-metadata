@@ -177,7 +177,7 @@ public class Util {
   }
 
   public static final String proposeSqlBasedCategoryId( String locale, LogicalTable table, Category category ) {
-    String baseID = ( table != null ) ? Util.toId( (String) table.getProperty( SqlPhysicalTable.TARGET_TABLE ) ) : ""; //$NON-NLS-1$
+    String baseID = ( table != null ) ? Util.toId( (String) table.getProperty( SqlPhysicalTable.TARGET_TABLE ).getValue() ) : ""; //$NON-NLS-1$
     String namePart =
         ( ( category != null ) && ( category.getName( locale ) != null ) )
             ? "_" + Util.toId( category.getName( locale ) ) : ""; //$NON-NLS-1$ //$NON-NLS-2$

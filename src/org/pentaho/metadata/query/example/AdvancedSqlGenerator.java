@@ -30,6 +30,7 @@ import org.pentaho.metadata.model.LogicalRelationship;
 import org.pentaho.metadata.model.LogicalTable;
 import org.pentaho.metadata.model.SqlPhysicalColumn;
 import org.pentaho.metadata.model.SqlPhysicalTable;
+import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.model.concept.types.RelationshipType;
 import org.pentaho.metadata.model.concept.types.TargetColumnType;
 import org.pentaho.metadata.query.impl.sql.MappedQuery;
@@ -82,7 +83,7 @@ public class AdvancedSqlGenerator extends SqlGenerator {
 
   @Override
   protected MappedQuery getSQL( LogicalModel model, List<Selection> selections, List<Constraint> constraints,
-      List<Order> orderbys, DatabaseMeta databaseMeta, String locale, Map<String, Object> parameters,
+      List<Order> orderbys, DatabaseMeta databaseMeta, String locale, Map<String, Property> parameters,
       boolean genAsPreparedStatement, boolean disableDistinct, int limit, Constraint securityConstraint )
     throws PentahoMetadataException {
 
@@ -255,10 +256,10 @@ public class AdvancedSqlGenerator extends SqlGenerator {
       String schemaName = null;
       if ( tbl.getLogicalTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA ) != null ) {
         schemaName =
-            databaseMeta.quoteField( (String) tbl.getLogicalTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA ) );
+            databaseMeta.quoteField( (String) tbl.getLogicalTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA ).getValue() );
       }
       String tableName =
-          databaseMeta.quoteField( (String) tbl.getLogicalTable().getProperty( SqlPhysicalTable.TARGET_TABLE ) );
+          databaseMeta.quoteField( (String) tbl.getLogicalTable().getProperty( SqlPhysicalTable.TARGET_TABLE ).getValue() );
       sqlquery.addTable( databaseMeta.getSchemaTableCombination( schemaName, tableName ), databaseMeta
           .quoteField( alias ) );
 
@@ -291,11 +292,11 @@ public class AdvancedSqlGenerator extends SqlGenerator {
           break;
       }
 
-      String leftSchema = (String) aliasedRelation.relation.getFromTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA );
-      String leftTable = (String) aliasedRelation.relation.getFromTable().getProperty( SqlPhysicalTable.TARGET_TABLE );
+      String leftSchema = (String) aliasedRelation.relation.getFromTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA ).getValue();
+      String leftTable = (String) aliasedRelation.relation.getFromTable().getProperty( SqlPhysicalTable.TARGET_TABLE ).getValue();
 
-      String rightSchema = (String) aliasedRelation.relation.getToTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA );
-      String rightTable = (String) aliasedRelation.relation.getToTable().getProperty( SqlPhysicalTable.TARGET_TABLE );
+      String rightSchema = (String) aliasedRelation.relation.getToTable().getProperty( SqlPhysicalTable.TARGET_SCHEMA ).getValue();
+      String rightTable = (String) aliasedRelation.relation.getToTable().getProperty( SqlPhysicalTable.TARGET_TABLE ).getValue();
 
       String leftTableName = databaseMeta.getQuotedSchemaTableCombination( leftSchema, leftTable );
       String rightTableName = databaseMeta.getQuotedSchemaTableCombination( rightSchema, rightTable );
@@ -521,8 +522,8 @@ public class AdvancedSqlGenerator extends SqlGenerator {
   // we don't want the pentaho MQL solution to ever come across aliases, etc.
   public static SQLAndAliasedTables getSelectionSQL( LogicalModel LogicalModel, AliasedSelection selection,
       DatabaseMeta databaseMeta, String locale ) {
-    String columnStr = (String) selection.getLogicalColumn().getProperty( SqlPhysicalColumn.TARGET_COLUMN );
-    if ( selection.getLogicalColumn().getProperty( SqlPhysicalColumn.TARGET_COLUMN_TYPE ) == TargetColumnType.OPEN_FORMULA ) {
+    String columnStr = (String) selection.getLogicalColumn().getProperty( SqlPhysicalColumn.TARGET_COLUMN ).getValue();
+    if ( selection.getLogicalColumn().getProperty( SqlPhysicalColumn.TARGET_COLUMN_TYPE ).getValue() == TargetColumnType.OPEN_FORMULA ) {
       // convert to sql using libformula subsystem
       try {
         // we'll need to pass in some context to PMSFormula so it can resolve aliases if necessary
@@ -604,7 +605,7 @@ public class AdvancedSqlGenerator extends SqlGenerator {
       join += "."; //$NON-NLS-1$
       join +=
           databaseMeta.quoteField( (String) relation.relation.getFromColumn().getProperty(
-              SqlPhysicalColumn.TARGET_COLUMN ) );
+              SqlPhysicalColumn.TARGET_COLUMN ).getValue() );
 
       // Equals
       join += " = "; //$NON-NLS-1$
@@ -614,7 +615,7 @@ public class AdvancedSqlGenerator extends SqlGenerator {
       join += "."; //$NON-NLS-1$
       join +=
           databaseMeta.quoteField( (String) relation.relation.getToColumn().getProperty(
-              SqlPhysicalColumn.TARGET_COLUMN ) );
+              SqlPhysicalColumn.TARGET_COLUMN ).getValue() );
     }
 
     return join;
