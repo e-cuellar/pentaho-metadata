@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ import org.pentaho.metadata.model.concept.types.RelationshipType;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class LogicalRelationship extends Concept {
+public class LogicalRelationship extends Concept implements Serializable {
 
   private static final long serialVersionUID = -2673951365033614344L;
 

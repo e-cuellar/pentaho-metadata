@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import org.pentaho.metadata.model.concept.types.LocalizedString;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class LogicalModel extends Concept {
+public class LogicalModel extends Concept implements Serializable {
 
   private static final long serialVersionUID = 4063396040423259880L;
 

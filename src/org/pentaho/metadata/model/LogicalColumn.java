@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.pentaho.metadata.model.concept.Concept;
@@ -32,7 +33,7 @@ import org.pentaho.metadata.model.concept.types.FieldType;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class LogicalColumn extends Concept {
+public class LogicalColumn extends Concept implements Serializable {
 
   private static final long serialVersionUID = -5818193472199662859L;
 

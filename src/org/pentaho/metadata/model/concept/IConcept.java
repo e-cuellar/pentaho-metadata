@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model.concept;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ import org.pentaho.metadata.model.concept.types.LocalizedString;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public interface IConcept extends Cloneable {
+public interface IConcept extends Cloneable, Serializable  {
 
   /**
    * This is used to denote the separator between the UID's type and id.

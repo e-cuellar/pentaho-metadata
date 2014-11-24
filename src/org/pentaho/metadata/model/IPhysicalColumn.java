@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.pentaho.metadata.model.concept.IConcept;
@@ -29,7 +30,7 @@ import org.pentaho.metadata.model.concept.types.FieldType;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public interface IPhysicalColumn extends IConcept {
+public interface IPhysicalColumn extends IConcept, Serializable  {
   public static final String FIELDTYPE_PROPERTY = "fieldtype"; //$NON-NLS-1$
   public static final String DATATYPE_PROPERTY = "datatype"; //$NON-NLS-1$
   public static final String AGGREGATIONTYPE_PROPERTY = "aggregation"; //$NON-NLS-1$

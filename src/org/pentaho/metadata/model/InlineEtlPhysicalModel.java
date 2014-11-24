@@ -16,9 +16,11 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pentaho.metadata.model.concept.Concept;
 import org.pentaho.metadata.model.concept.IConcept;
 import org.pentaho.metadata.model.concept.Property;
 
@@ -29,7 +31,7 @@ import org.pentaho.metadata.model.concept.Property;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class InlineEtlPhysicalModel extends AbstractPhysicalModel {
+public class InlineEtlPhysicalModel extends Concept implements IPhysicalModel, Serializable  {
 
   private static final long serialVersionUID = 998991922256017536L;
 
@@ -37,12 +39,36 @@ public class InlineEtlPhysicalModel extends AbstractPhysicalModel {
   public static final String HEADER_PRESENT = "header_present"; //$NON-NLS-1$
   public static final String ENCLOSURE = "enclosure"; //$NON-NLS-1$
   public static final String DELIMITER = "delimiter"; //$NON-NLS-1$
+  
+  private static final String CLASS_ID = "IPhysicalModel";
 
   // this contains a list of the physical tables
   private List<InlineEtlPhysicalTable> physicalTables = new ArrayList<InlineEtlPhysicalTable>();
-
+  
+  private Domain domain;
+  
   public InlineEtlPhysicalModel() {
     super();
+  }
+
+  @Override
+  public IConcept getParent() {
+    return domain;
+  }
+
+  public void setDomain( Domain domain ) {
+    this.domain = domain;
+  }
+
+  public Domain getDomain() {
+    return domain;
+  }
+
+  @Override
+  public List<String> getUniqueId() {
+    List<String> uid = new ArrayList<String>();
+    uid.add( CLASS_ID.concat( UID_TYPE_SEPARATOR ) + getId() );
+    return uid;
   }
 
   @Override

@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import org.pentaho.metadata.model.concept.types.LocalizedString;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class InlineEtlPhysicalTable extends Concept implements IPhysicalTable {
+public class InlineEtlPhysicalTable extends Concept implements IPhysicalTable, Serializable  {
 
   private static final long serialVersionUID = 587552752354101051L;
 

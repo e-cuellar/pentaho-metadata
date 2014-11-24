@@ -16,6 +16,7 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import org.pentaho.metadata.model.concept.IConcept;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class LogicalTable extends Concept {
+public class LogicalTable extends Concept implements Serializable {
 
   private static final long serialVersionUID = -2655375483724689568L;
 

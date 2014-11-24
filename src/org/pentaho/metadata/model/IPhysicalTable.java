@@ -16,11 +16,12 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.pentaho.metadata.model.concept.IConcept;
 
-public interface IPhysicalTable extends IConcept {
+public interface IPhysicalTable extends IConcept, Serializable  {
 
   public static final String TABLETYPE_PROPERTY = "tabletype"; //$NON-NLS-1$
 

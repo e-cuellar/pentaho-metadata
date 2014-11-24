@@ -16,9 +16,11 @@
  */
 package org.pentaho.metadata.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pentaho.metadata.model.concept.Concept;
 import org.pentaho.metadata.model.concept.IConcept;
 
 /**
@@ -28,10 +30,12 @@ import org.pentaho.metadata.model.concept.IConcept;
  * @author Will Gorman (wgorman@pentaho.com)
  * 
  */
-public class SqlPhysicalModel extends AbstractPhysicalModel {
+public class SqlPhysicalModel extends Concept implements IPhysicalModel, Serializable {
 
   private static final long serialVersionUID = 8834210720816769790L;
 
+  private static final String CLASS_ID = "IPhysicalModel";
+  
   // this property should be replaced with a thin
   // representation of database meta, which is required
   // for full backward compatibility.
@@ -42,10 +46,32 @@ public class SqlPhysicalModel extends AbstractPhysicalModel {
   // this contains a list of the physical tables
   private List<SqlPhysicalTable> physicalTables = new ArrayList<SqlPhysicalTable>();
 
+  private Domain domain;
+  
   public SqlPhysicalModel() {
     super();
   }
 
+  @Override
+  public IConcept getParent() {
+    return domain;
+  }
+
+  public void setDomain( Domain domain ) {
+    this.domain = domain;
+  }
+
+  public Domain getDomain() {
+    return domain;
+  }
+
+  @Override
+  public List<String> getUniqueId() {
+    List<String> uid = new ArrayList<String>();
+    uid.add( CLASS_ID.concat( UID_TYPE_SEPARATOR ) + getId() );
+    return uid;
+  }
+  
   @Override
   public List<IConcept> getChildren() {
     List<IConcept> children = new ArrayList<IConcept>();
